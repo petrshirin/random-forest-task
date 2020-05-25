@@ -13,7 +13,7 @@ def predict():
     forest = pik[0]
     tokenizer = Tokenizer([])
     tokenizer.tokens = pik[1]
-
+    result = open('result', 'w')
     for test_var in test:
         i = test_var['i']
         del test_var['i']
@@ -21,8 +21,10 @@ def predict():
         x_test = []
         for key, value in test_var.items():
             x_test.append(tokenizer.get_token_by_value(value))
-
-        print(int(i), tokenizer.get_key_by_token(forest.predict(np.array([x_test]))[0]))
+        res = tokenizer.get_key_by_token(forest.predict(np.array([x_test]))[0])
+        result.write(f'{int(i)} {res}\n')
+        print(int(i), res)
+    result.close()
 
 
 if __name__ == '__main__':
